@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <!-- Define a acentuação correta para o português -->
+    <meta charset="UTF-8">
+
+    <!-- Garante responsividade para dispositivos móveis -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Título da aba do navegador -->
+    <title>Inside My Fridge</title>
+
+    <!-- Vínculo com o arquivo CSS estático do Flask -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Tipografia via Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Cabeçalho Principal -->
+    <header class="header">
+        <div class="logo">
+            <span class="logo-mark">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="1.5" width="16" height="21" rx="3.5" stroke="#1E2A22" stroke-width="1.6"/>
+                    <line x1="4" y1="9.5" x2="20" y2="9.5" stroke="#1E2A22" stroke-width="1.6"/>
+                    <line x1="7" y1="4.5" x2="7" y2="6.5" stroke="#E1552E" stroke-width="1.8" stroke-linecap="round"/>
+                    <line x1="7" y1="12.5" x2="7" y2="16" stroke="#E1552E" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+            </span>
+            <span>Inside My Fridge</span>
+        </div>
+        <p class="subtitle">Diga o que sobrou na geladeira e deixe a IA criar uma receita pra você.</p>
+    </header>
+
+    <main class="container">
+        <!-- Cartão do Formulário -->
+        <section class="card form-card">
+            <form id="recipe-form">
+
+                <!-- Campo de Entrada dos Ingredientes -->
+                <div class="input-group">
+                    <label for="ingredientes">O que tem na sua geladeira hoje?</label>
+                    <textarea
+                        id="ingredientes"
+                        name="ingredientes"
+                        placeholder="Ex: 2 ovos, tomate, sobrou arroz de ontem, um pedaço de queijo..."
+                        rows="4"
+                        required></textarea>
+                </div>
+
+                <!-- Filtros e Preferências -->
+                <div class="input-group">
+                    <label>Filtros e preferências (opcional)</label>
+                    <div class="tags-container">
+                        <label class="tag-checkbox">
+                            <input type="checkbox" name="filtros" value="Rápido (menos de 20 min)">
+                            <span>⏱️ Rápido</span>
+                        </label>
+                        <label class="tag-checkbox">
+                            <input type="checkbox" name="filtros" value="Vegetariano">
+                            <span>🌱 Vegetariano</span>
+                        </label>
+                        <label class="tag-checkbox">
+                            <input type="checkbox" name="filtros" value="Vegano">
+                            <span>🥑 Vegano</span>
+                        </label>
+                        <label class="tag-checkbox">
+                            <input type="checkbox" name="filtros" value="Sem Glúten">
+                            <span>🌾 Sem glúten</span>
+                        </label>
+                        <label class="tag-checkbox">
+                            <input type="checkbox" name="filtros" value="Lanche">
+                            <span>🥪 Lanche fácil</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Botão de Envio com Spinner -->
+                <button type="submit" id="btn-submit">
+                    <span class="btn-text">✨ Criar receita com IA</span>
+                    <div class="spinner hidden"></div>
+                </button>
+
+            </form>
+        </section>
+
+        <!-- Cena de Carregamento (Inicia oculta) -->
+        <section id="loading-card" class="card loading-card hidden" aria-live="polite">
+            <div class="kitchen-scene">
+                <!-- tábua com tomate sendo cortado -->
+                <div class="board">
+                    <div class="tomato"></div>
+                    <span class="crumb"></span>
+                    <span class="crumb"></span>
+                    <span class="crumb"></span>
+                    <div class="knife"></div>
+                </div>
+
+                <!-- tigela mexendo a salada -->
+                <div class="bowl-wrap">
+                    <div class="spoon"></div>
+                    <div class="bowl">
+                        <div class="veg veg-1"></div>
+                        <div class="veg veg-2"></div>
+                        <div class="veg veg-3"></div>
+                    </div>
+                </div>
+            </div>
+            <p class="loading-text" id="loading-text">Analisando os ingredientes...</p>
+        </section>
+
+        <!-- Cartão de Resultado da Receita (Inicia oculto) -->
+        <section id="recipe-result" class="card result-card hidden">
+
+            <div class="recipe-header">
+                <h2 id="recipe-title">--</h2>
+                <div class="recipe-badges">
+                    <span id="recipe-time" class="badge">⏱️ --</span>
+                    <span id="recipe-difficulty" class="badge">📊 --</span>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <div class="recipe-content">
+                <!-- Lista de Ingredientes -->
+                <div class="ingredients-section">
+                    <h3>🛒 Ingredientes necessários</h3>
+                    <ul id="recipe-ingredients"></ul>
+                </div>
+
+                <!-- Passo a Passo -->
+                <div class="steps-section">
+                    <h3>👨‍🍳 Modo de preparo</h3>
+                    <ol id="recipe-steps"></ol>
+                </div>
+            </div>
+
+            <!-- Caixa de Dica do Chef -->
+            <div id="recipe-tip-container" class="tip-box hidden">
+                💡 <span><strong>Dica do chef:</strong> <span id="recipe-tip"></span></span>
+            </div>
+
+        </section>
+
+        <p class="footer">Feito com 🍅 e um pouco de IA.</p>
+    </main>
+
+    <!-- Script JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

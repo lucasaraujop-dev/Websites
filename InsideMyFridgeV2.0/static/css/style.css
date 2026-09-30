@@ -1,0 +1,667 @@
+/* ==========================================================================
+   INSIDE MY FRIDGE — design tokens
+   ========================================================================== */
+
+:root {
+    /* cor */
+    --bg: #EEF3EC;
+    --bg-glow: #E4EFE3;
+    --surface: #FFFFFF;
+    --surface-sunken: #F6F8F4;
+    --ink: #1E2A22;
+    --ink-muted: #667267;
+    --line: #E1E8DC;
+
+    --tomato: #E1552E;
+    --tomato-dark: #C6431F;
+    --tomato-tint: #FCE7E0;
+
+    --leaf: #4C7A5A;
+    --leaf-dark: #3A6046;
+    --leaf-tint: #DFEEE2;
+
+    --citrus: #EFAF1E;
+    --citrus-tint: #FCEFD2;
+
+    /* tipografia */
+    --font-display: "Fredoka", "Segoe UI", sans-serif;
+    --font-body: "Inter", "Segoe UI", sans-serif;
+
+    /* forma */
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 26px;
+    --radius-pill: 999px;
+
+    /* sombra */
+    --shadow-sm: 0 2px 6px rgba(30, 42, 34, 0.06);
+    --shadow-md: 0 16px 32px -12px rgba(30, 42, 34, 0.16);
+    --shadow-inset: inset 0 1px 2px rgba(30, 42, 34, 0.04);
+
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ==========================================================================
+   RESET
+   ========================================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    background:
+        radial-gradient(60% 50% at 18% -6%, var(--bg-glow) 0%, transparent 60%),
+        radial-gradient(55% 45% at 100% 0%, var(--tomato-tint) 0%, transparent 55%),
+        var(--bg);
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 56px 20px 80px;
+    min-height: 100vh;
+    line-height: 1.5;
+}
+
+button {
+    font-family: inherit;
+}
+
+:focus-visible {
+    outline: 2px solid var(--tomato);
+    outline-offset: 3px;
+    border-radius: 6px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ==========================================================================
+   LAYOUT
+   ========================================================================== */
+
+.container {
+    width: 100%;
+    max-width: 640px;
+}
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+
+.header {
+    text-align: center;
+    margin-bottom: 36px;
+}
+
+.logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+}
+
+.logo-mark {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    background: var(--surface);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+    padding: 6px;
+}
+
+.logo-mark svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.subtitle {
+    color: var(--ink-muted);
+    font-size: 1rem;
+    max-width: 38ch;
+    margin: 0 auto;
+}
+
+/* ==========================================================================
+   CARD
+   ========================================================================== */
+
+.card {
+    background-color: var(--surface);
+    padding: 32px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--line);
+    margin-bottom: 24px;
+}
+
+@media (max-width: 480px) {
+    .card {
+        padding: 24px 20px;
+    }
+}
+
+/* ==========================================================================
+   FORMULÁRIO
+   ========================================================================== */
+
+.input-group {
+    margin-bottom: 22px;
+}
+
+.input-group label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+}
+
+textarea {
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--surface-sunken);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--ink);
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease);
+}
+
+textarea::placeholder {
+    color: #9AA69C;
+}
+
+textarea:focus {
+    border-color: var(--tomato);
+    background: var(--surface);
+}
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tag-checkbox input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.tag-checkbox span {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 16px;
+    background-color: var(--surface-sunken);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-pill);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.18s var(--ease);
+}
+
+.tag-checkbox span:hover {
+    border-color: #C7D4C2;
+    transform: translateY(-1px);
+}
+
+.tag-checkbox input:checked + span {
+    background-color: var(--leaf-tint);
+    border-color: var(--leaf);
+    color: var(--leaf-dark);
+    font-weight: 600;
+}
+
+.tag-checkbox input:focus-visible + span {
+    outline: 2px solid var(--tomato);
+    outline-offset: 2px;
+}
+
+button[type="submit"] {
+    width: 100%;
+    background-color: var(--tomato);
+    color: white;
+    border: none;
+    padding: 17px;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: var(--font-display);
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 6px;
+    box-shadow: 0 10px 20px -8px rgba(225, 85, 46, 0.55);
+    transition: background-color 0.18s var(--ease), transform 0.18s var(--ease), box-shadow 0.18s var(--ease);
+}
+
+button[type="submit"]:hover:not(:disabled) {
+    background-color: var(--tomato-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 14px 24px -8px rgba(198, 67, 31, 0.55);
+}
+
+button[type="submit"]:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+button[type="submit"]:disabled {
+    cursor: not-allowed;
+    opacity: 0.85;
+}
+
+.spinner {
+    width: 18px;
+    height: 18px;
+    border: 2.5px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   CENA DE CARREGAMENTO — tábua + tomate + tigela
+   ========================================================================== */
+
+.loading-card {
+    text-align: center;
+    animation: card-in 0.35s var(--ease);
+}
+
+.kitchen-scene {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 44px;
+    height: 150px;
+    margin: 6px auto 20px;
+}
+
+/* --- tábua e tomate sendo cortado --- */
+
+.board {
+    position: relative;
+    width: 132px;
+    height: 78px;
+    background: linear-gradient(180deg, #E3B778 0%, #CE9C5C 100%);
+    border-radius: 14px;
+    box-shadow: var(--shadow-sm);
+}
+
+.board::after {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    border-radius: 8px;
+}
+
+.tomato {
+    position: absolute;
+    left: 24px;
+    bottom: 20px;
+    width: 32px;
+    height: 32px;
+    background: var(--tomato);
+    border-radius: 50%;
+    box-shadow: inset -5px -5px 0 rgba(0, 0, 0, 0.08);
+    animation: squish 0.9s var(--ease) infinite;
+}
+
+.tomato::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: 12px;
+    width: 9px;
+    height: 7px;
+    background: var(--leaf);
+    border-radius: 2px 2px 0 0;
+}
+
+.crumb {
+    position: absolute;
+    bottom: 30px;
+    left: 54px;
+    width: 6px;
+    height: 6px;
+    background: var(--tomato-dark);
+    border-radius: 1px;
+    opacity: 0;
+    animation: crumb-fall 0.9s ease-in infinite;
+}
+
+.crumb:nth-child(2) { left: 60px; animation-delay: 0.05s; }
+.crumb:nth-child(3) { left: 50px; animation-delay: 0.1s; }
+
+.knife {
+    position: absolute;
+    right: 6px;
+    bottom: 46px;
+    width: 78px;
+    height: 12px;
+    transform-origin: right center;
+    animation: chop 0.9s var(--ease) infinite;
+}
+
+.knife::before {
+    /* lâmina */
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 56px;
+    height: 100%;
+    background: linear-gradient(180deg, #E9EEEA 0%, #C3CCC5 100%);
+    clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 70%);
+    border-radius: 2px;
+}
+
+.knife::after {
+    /* cabo */
+    content: "";
+    position: absolute;
+    right: 0;
+    top: -3px;
+    width: 24px;
+    height: 18px;
+    background: var(--ink);
+    border-radius: 4px;
+}
+
+@keyframes chop {
+    0%, 40%, 100% { transform: rotate(-20deg); }
+    50% { transform: rotate(4deg); }
+    60% { transform: rotate(-20deg); }
+}
+
+@keyframes squish {
+    0%, 40%, 100% { transform: scale(1, 1); }
+    50% { transform: scale(1.08, 0.85); }
+    60% { transform: scale(1, 1); }
+}
+
+@keyframes crumb-fall {
+    0%, 45% { opacity: 0; transform: translate(0, 0) rotate(0deg); }
+    55% { opacity: 1; }
+    100% { opacity: 0; transform: translate(14px, 34px) rotate(140deg); }
+}
+
+/* --- tigela mexendo a salada --- */
+
+.bowl-wrap {
+    position: relative;
+    width: 126px;
+    height: 90px;
+}
+
+.bowl {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 62px;
+    background: linear-gradient(180deg, #FFFFFF 0%, var(--surface-sunken) 100%);
+    border: 1.5px solid var(--line);
+    border-top: none;
+    border-radius: 0 0 60px 60px;
+    box-shadow: var(--shadow-sm), var(--shadow-inset);
+    overflow: hidden;
+}
+
+.veg {
+    position: absolute;
+    bottom: 20px;
+    width: 13px;
+    height: 13px;
+    border-radius: 3px;
+    animation: toss 1.4s ease-in-out infinite;
+}
+
+.veg-1 { left: 30px; background: var(--leaf); animation-delay: 0s; }
+.veg-2 { left: 55px; background: var(--citrus); border-radius: 50%; animation-delay: 0.25s; }
+.veg-3 { left: 78px; background: var(--tomato); animation-delay: 0.5s; }
+
+@keyframes toss {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-8px, -16px) rotate(80deg); }
+    50% { transform: translate(6px, -4px) rotate(180deg); }
+    75% { transform: translate(10px, -18px) rotate(260deg); }
+    100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+.spoon {
+    position: absolute;
+    left: 50%;
+    top: -6px;
+    width: 4px;
+    height: 58px;
+    background: #B9825A;
+    border-radius: 2px;
+    transform-origin: bottom center;
+    animation: stir 1.8s linear infinite;
+}
+
+.spoon::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: -5px;
+    width: 14px;
+    height: 18px;
+    background: #B9825A;
+    border-radius: 50%;
+}
+
+@keyframes stir {
+    from { transform: rotate(-18deg); }
+    to { transform: rotate(342deg); }
+}
+
+.loading-text {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 0.98rem;
+    color: var(--ink-muted);
+    min-height: 1.4em;
+}
+
+@media (max-width: 480px) {
+    .kitchen-scene {
+        gap: 20px;
+        transform: scale(0.85);
+    }
+}
+
+/* ==========================================================================
+   RESULTADO DA RECEITA
+   ========================================================================== */
+
+.result-card {
+    animation: card-in 0.4s var(--ease);
+}
+
+@keyframes card-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.recipe-header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+#recipe-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.5rem;
+    letter-spacing: -0.01em;
+}
+
+.recipe-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: var(--leaf-tint);
+    color: var(--leaf-dark);
+    border-radius: var(--radius-pill);
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 4px 0 24px;
+}
+
+.recipe-content {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.recipe-content h3 {
+    font-family: var(--font-display);
+    font-size: 1.02rem;
+    font-weight: 600;
+    margin-bottom: 14px;
+}
+
+.ingredients-section ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ingredients-section li {
+    position: relative;
+    padding-left: 22px;
+    font-size: 0.95rem;
+    color: var(--ink);
+}
+
+.ingredients-section li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 8px;
+    height: 8px;
+    background: var(--tomato);
+    border-radius: 50%;
+}
+
+.steps-section ol {
+    list-style: none;
+    counter-reset: step;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.steps-section li {
+    counter-increment: step;
+    position: relative;
+    padding-left: 40px;
+    font-size: 0.95rem;
+    min-height: 28px;
+    display: flex;
+    align-items: center;
+}
+
+.steps-section li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 28px;
+    height: 28px;
+    background: var(--leaf-tint);
+    color: var(--leaf-dark);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.85rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.tip-box {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    background-color: var(--citrus-tint);
+    border-left: 3px solid var(--citrus);
+    padding: 14px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    color: #7A5A0E;
+    margin-top: 24px;
+}
+
+.tip-box strong {
+    color: #5C4409;
+}
+
+/* ==========================================================================
+   RODAPÉ
+   ========================================================================== */
+
+.footer {
+    margin-top: 8px;
+    color: var(--ink-muted);
+    font-size: 0.82rem;
+    text-align: center;
+}
+
+/* ==========================================================================
+   ACESSIBILIDADE — movimento reduzido
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+    }
+}
